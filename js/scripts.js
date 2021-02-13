@@ -8,7 +8,7 @@ const searchContainer = document.querySelector('div.search-container');
 // Store the user profiles in this global variable
 const userProfiles = [];
 // The list of profile data points we want to fetch per user
-const infoList = "name,location,email,picture,cell,dob";
+const infoList = "name,location,email,picture,cell,dob,gender";
 // Fetch the Random User data via the API
 fetch(`https://randomuser.me/api/?format=json&results=12&inc=${infoList}&nat=us`)
 .then(res => res.json())
@@ -28,11 +28,11 @@ function drawUserCard(user, idx) {
     
     // Create div for user card
     const div = document.createElement('div');
-    div.className = "card";
+    div.className = `card ${user.gender}`;
     // Set id of div to idx, so that when this card is clicked, the drawUserModal() function knows which user profile to access 
     div.id = `user${idx}`;
     const cardInnerHTML = `
-        <div class="card-img-container">
+        <div class="card-img-container}">
             <img class="card-img" src="${user.picture.large}" alt="profile picture">
         </div>
         <div class="card-info-container">
