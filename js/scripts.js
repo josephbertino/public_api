@@ -7,15 +7,18 @@ const searchContainer = document.querySelector('div.search-container');
 
 // Store the user profiles in this global variable
 const userProfiles = [];
-// The list of profile data points we want to fetch per user
-const infoList = "name,location,email,picture,cell,dob,gender";
-// Fetch the Random User data via the API
-fetch(`https://randomuser.me/api/?format=json&results=12&inc=${infoList}&nat=us`)
-.then(res => res.json())
-.then(data => {
-    data.results.map(drawUserCard);
-})
-.catch( e => console.log("Error fetching user data:", e) );
+
+window.onload = (e) => {
+    // The list of profile data points we want to fetch per user
+    const infoList = "name,location,email,picture,cell,dob,gender";
+    // Fetch the Random User data via the API
+    fetch(`https://randomuser.me/api/?format=json&results=12&inc=${infoList}&nat=us`)
+    .then(res => res.json())
+    .then(data => {
+        data.results.map(drawUserCard);
+    })
+    .catch( e => console.log("Error fetching user data:", e) );
+}
 
 /**
  * Given a user data object, add a Profile card to the main page with that data
