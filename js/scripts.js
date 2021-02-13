@@ -161,7 +161,7 @@ function fillUserModalInfo(userId) {
     return modalHTML;
 }
 
-// For Exceeds Expectations, Add a Search / Filter feature to the User Page
+// For Exceeds Expectations, Add a Filter feature to the User Page
 const searchHTML = `
     <form action="#" method="get">
         <input type="search" id="search-input" class="search-input" placeholder="Search User...">
@@ -173,7 +173,7 @@ filterInput.addEventListener('keyup', filterUsers);
 
 /**
  * Filter user cards on the page by their First and Last Names
- * @param {Object} event    The Object for the Search bar's keyup event
+ * @param {Object} event    The Object for the Filter bar's keyup event
  */
 function filterUsers(event) {
     /*
@@ -181,7 +181,7 @@ function filterUsers(event) {
     */
     let pattern = filterInput.value.toLowerCase().trim();
     
-    // Iterate through the div.card elements, looking for profiles whose names match or include the search pattern entered in the Search bar. Configure each div's 'display' property based on match
+    // Iterate through the div.card elements, looking for profiles whose names match or include the pattern entered in the Filter bar. Configure each div's 'display' property based on match
     const cards = document.querySelectorAll('div.card');
     cards.forEach((card) => {
         let username = card.querySelector('h3#name').textContent.toLowerCase();
