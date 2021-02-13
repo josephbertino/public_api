@@ -30,7 +30,7 @@ function drawUserCard(user, idx) {
     const div = document.createElement('div');
     div.className = "card";
     // Set id of div to idx, so that when this card is clicked, the drawUserModal() function knows which user profile to access 
-    div.id = `${idx}`;
+    div.id = `user${idx}`;
     const cardInnerHTML = `
         <div class="card-img-container">
             <img class="card-img" src="${user.picture.large}" alt="profile picture">
@@ -66,7 +66,7 @@ function getDOB(dobstr) {
  */
 function drawUserModal(event) {
     // Obtain the userID from the div card's id
-    const userId = parseInt(event.currentTarget.id);
+    const userId = event.currentTarget.id.match(/^user(\d*)$/)[1];
     // modalHTML contains the user-info portion of the modal window
     const modalHTML = fillUserModalInfo(userId);
     
@@ -104,13 +104,24 @@ function switchModal(e) {
     // The id of the current modal info container is also the currently displayed user's ID
     let userId = parseInt(document.querySelector(".modal-info-container").id);
     
-    // Depending on whether we want the 'prev' or 'next' user, change the userID (modular w/r/t the number of user profiles in the global list)
+    // We are going to iterate through the user profiles. So we need to know whether to iterate
+    // forwards ('next') or backwards ('prev'), with wrapping around
+    let increment;
     if (e.target.classList.contains('modal-prev')) {
         // Modulo % does not work with negative number in JS
         // So just add by (total - 1), in case userId === 0
-        userId = (userId + (userProfiles.length - 1))  % userProfiles.length;
+        increment = (userProfiles.length - 1);
     } else { // it contains 'modal-next'
-        userId = (userId + 1) % userProfiles.length ;
+        increment = 1;
+    }
+    
+    // Iterate through 'div.card' elements until we find the next one that's currently displayed
+    // (based on the user name filtering)
+    while(true) {
+        userId = (userId + increment) % userProfiles.length;
+        if (document.querySelector(`div.card#user${userId}`).style.display !== 'none') {
+            break;
+        }
     }
     
     // Remove the current modal-info-container
@@ -153,8 +164,33 @@ function fillUserModalInfo(userId) {
 // For Exceeds Expectations, Add a Search / Filter feature to the User Page
 const searchHTML = `
     <form action="#" method="get">
-        <input type="search" id="search-input" class="search-input" placeholder="Search...">
-        <input type="submit" value="&#x1F50D;" id="search-submit" class="search-submit">
+        <input type="search" id="search-input" class="search-input" placeholder="Search User...">
     </form>
     `;
 searchContainer.insertAdjacentHTML('beforeend', searchHTML);
+const filterInput = document.querySelector('input#search-input');
+filterInput.addEventListener('keyup', filterUsers);
+
+/**
+ * Filter user cards on the page by their First and Last Names
+ * @param {Object} event    The Object for the Search bar's keyup event
+ */
+function filterUsers(event) {
+    /*
+    trim() whitespace to allow for the possibility of a pattern including portions of both the first and last name. 
+    */
+    let pattern = filterInput.value.toLowerCase().trim();
+    
+    // Iterate through the div.card elements, looking for profiles whose names match or include the search pattern entered in the Search bar. Configure each div's 'display' property based on match
+    const cards = document.querySelectorAll('div.card');
+    cards.forEach((card) => {
+        let username = card.querySelector('h3#name').textContent.toLowerCase();
+        
+        // If the pattern is found in the student name, add the student to our filtered list
+        if (username.includes(pattern)) {
+            $(card).show();
+        } else {
+            $(card).hide();
+        }
+    });
+}

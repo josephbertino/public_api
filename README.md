@@ -12,3 +12,10 @@ Author: Joseph Bertino, 2021
 * Clicking the employee’s image or name will open a modal window with more detailed information, such as the employee’s birthday and address.
 
 ## Exceeds Expectations 
+
+1)
+
+2)
+
+3) CSS Customizations
+    + Changed the background color of the 'div.modal-btn-container' element to 'aliceblue'
