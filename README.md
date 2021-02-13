@@ -20,4 +20,4 @@ Author: Joe Bertino, 2021
 * You will only toggle through users that were actively displayed on the page when the modal window was opened. That is, you will only see users that pass the current name filter.
 
 3) **CSS Customizations**
-* Color-coded the user profile cards ('div.card' elements) according to user gender (as received by the API call).
+* Color-coded the user profile cards ('div.card' elements) and modal windows according to user gender.

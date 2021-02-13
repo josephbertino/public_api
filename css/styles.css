@@ -104,11 +104,11 @@ header h1 {
     text-align: left;
 }
 
-.card.male {
+.card.male, .modal.male {
 	background: aliceblue;
 }
 
-.card.female {
+.card.female, .modal.female{
 	background: lavenderblush;
 }
 

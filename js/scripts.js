@@ -72,7 +72,7 @@ function drawUserModal(event) {
     
     const containerHTML = `
         <div class="modal-container">
-            <div class="modal">
+            <div class="modal ${userProfiles[userId].gender}">
                 <button type="button" id="modal-close-btn" class="modal-close-btn"><strong>X</strong></button>
                 <div class="modal-info-container" id="${userId}">
                     ${modalHTML}
@@ -124,6 +124,8 @@ function switchModal(e) {
         }
     }
     
+    // Update the modal window's background color for the new user's gender
+    document.querySelector('div.modal').className = `modal ${userProfiles[userId].gender}`;
     // Remove the current modal-info-container
     document.querySelector(".modal-info-container").remove();
     // Create a new modal-info-container
